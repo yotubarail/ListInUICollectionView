@@ -31,11 +31,12 @@ class ViewController: UIViewController, UICollectionViewDelegate {
         
         var configuration = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
         configuration.headerMode = UICollectionLayoutListConfiguration.HeaderMode.firstItemInSection
+//        layoutConfig.headerMode = supplementary
         let layout = UICollectionViewCompositionalLayout.list(using: configuration)
         collectionView.collectionViewLayout = layout
         
         self.dataSource = tableDataSource(collectionView: self.collectionView)
-                collectionView.dataSource = self.dataSource
+        collectionView.dataSource = self.dataSource
         reloadList()
     }
 
@@ -56,13 +57,16 @@ class tableDataSource: UICollectionViewDiffableDataSource<Section, String> {
         let cell = UICollectionView.CellRegistration<UICollectionViewListCell, String> { (cell, indexPath, item) in
             var content = cell.defaultContentConfiguration()
             content.text = item
-            
+            // content.image, content.secondaryTextでも可能
             cell.contentConfiguration = content
         }
         super.init(collectionView: collectionView, cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell? in
             return collectionView.dequeueConfiguredReusableCell(using: cell, for: indexPath, item: item)
         })
     }
-
+    
+    /*override func collectionView(_ collectionView: UICollectionView,     viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -    > UICollectionReusableView {
+        
+    }*/
 }
 
