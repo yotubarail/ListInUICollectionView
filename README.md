@@ -1,0 +1,4 @@
+# ListInUICollectionView
+UITableViewで作っていたリストをUICollectionViewで作る(iOS14,Xcode12以降対応）
+
+カスタムヘッダーは後々追加
