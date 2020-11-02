@@ -15,7 +15,7 @@ enum Section {
     case number
 }
 
-class ViewController: UIViewController, UICollectionViewDelegate {
+class ViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -30,9 +30,12 @@ class ViewController: UIViewController, UICollectionViewDelegate {
         collectionView.delegate = self
         
         var configuration = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
-        configuration.headerMode = UICollectionLayoutListConfiguration.HeaderMode.firstItemInSection
-//        layoutConfig.headerMode = supplementary
+        configuration.headerMode = .firstItemInSection
         let layout = UICollectionViewCompositionalLayout.list(using: configuration)
+//        var layoutConfig = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
+//        layoutConfig.headerMode = .supplementary
+//        layoutConfig.footerMode = .supplementary
+//        let layout = UICollectionViewCompositionalLayout.list(using: layoutConfig)
         collectionView.collectionViewLayout = layout
         
         self.dataSource = tableDataSource(collectionView: self.collectionView)
@@ -51,6 +54,13 @@ class ViewController: UIViewController, UICollectionViewDelegate {
 
 }
 
+extension ViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+    }
+}
+
 class tableDataSource: UICollectionViewDiffableDataSource<Section, String> {
 
     init(collectionView: UICollectionView) {
@@ -64,9 +74,5 @@ class tableDataSource: UICollectionViewDiffableDataSource<Section, String> {
             return collectionView.dequeueConfiguredReusableCell(using: cell, for: indexPath, item: item)
         })
     }
-    
-    /*override func collectionView(_ collectionView: UICollectionView,     viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -    > UICollectionReusableView {
-        
-    }*/
 }
 
